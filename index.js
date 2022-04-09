@@ -6,14 +6,12 @@ const { logger } = require('./infrastructure');
 const { API_LOGIN_ENDPOINT, API_USER, API_PASSWORD } = process.env;
 
 const getAuthToken = async (username, password) => {
-  const requestConfig = {
+  const { data } = await httpClient.request({
     method: 'post',
     url: API_LOGIN_ENDPOINT,
     headers: { 'Content-Type': 'application/json' },
     data: JSON.stringify({ username, password }),
-  };
-
-  const { data } = await httpClient.request(requestConfig);
+  });
 
   return data;
 };
