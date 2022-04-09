@@ -1,0 +1,31 @@
+{
+  "name": "oc-reporter",
+  "version": "0.1.0",
+  "description": "PDF generation and email reporting tool",
+  "main": "index.js",
+  "scripts": {
+    "dev": "./node_modules/.bin/nodemon --experimental-modules --es-module-specifier-resolution=node index | pino-pretty",
+    "start": "./node_modules/.bin/nodemon --experimental-modules --es-module-specifier-resolution=node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hectorgomezv/oc-reporter.git"
+  },
+  "author": "Hector Gomez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hectorgomezv/oc-reporter/issues"
+  },
+  "homepage": "https://github.com/hectorgomezv/oc-reporter#readme",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "dotenv": "^16.0.0",
+    "pino": "^7.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.13.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "nodemon": "^2.0.15"
+  }
+}
