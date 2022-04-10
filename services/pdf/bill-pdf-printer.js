@@ -2,20 +2,15 @@ global.window = {};
 const fs = require('fs');
 const { jsPDF } = require('jspdf');
 const { applyPlugin } = require('jspdf-autotable/dist/jspdf.plugin.autotable');
+const dateFormatter = require('../../domain/dates/date-formatter');
 
 applyPlugin(jsPDF);
 
 const BILL_COLUMNS = ['#Albaran', 'Fecha', '#Lineas', 'Subtotal', 'Impuestos', 'Total'];
 const RATES_COLUMNS = ['Base', 'IVA %', 'IVA €', 'R.E. %', 'R.E. €', 'Importe'];
 
-const compactDateFormat = (unformatted) => {
-  const date = new Date(unformatted);
-
-  return `${date.getFullYear()}${date.getMonth() + 1}${date.getDay()}`;
-};
-
-const getOutputDir = (createdAt) => {
-  const dir = `./output/${compactDateFormat(createdAt)}`;
+const getOutputDir = () => {
+  const dir = `./output/${dateFormatter.compact(new Date())}`;
 
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
@@ -24,7 +19,10 @@ const getOutputDir = (createdAt) => {
   return dir;
 };
 
-const getBillFilename = ({ name }, { code }, createdAt) => `${code}-${compactDateFormat(createdAt)}-${name.replace(/ /g, '_')}`;
+const getBillFilename = ({ name }, { code }, createdAt) => `${code}-`
+  + `${dateFormatter.compact(new Date(createdAt))}-`
+  + `${name.replace(/ /g, '_')}`;
+
 const getDateText = (date) => `Fecha ${new Date(date).toLocaleDateString('en-GB')}`;
 
 const getCustomerAddressText = ({
@@ -91,7 +89,7 @@ const addTotal = (doc, total) => {
   doc.text(`Total: ${total}€`, doc.internal.pageSize.width - 120, doc.lastAutoTable.finalY + 25);
 };
 
-const printBill = (ocInfo, bill) => {
+const printBill = (metadata, bill) => {
   const doc = new jsPDF('p', 'pt');
 
   const {
@@ -102,7 +100,7 @@ const printBill = (ocInfo, bill) => {
     total,
   } = bill;
 
-  addCustomerAndDateHeader(doc, ocInfo, createdAt, customer, `FACTURA no. #${bill.code}`);
+  addCustomerAndDateHeader(doc, metadata, createdAt, customer, `FACTURA no. #${bill.code}`);
 
   let positionY = 200;
 
@@ -140,7 +138,7 @@ const printBill = (ocInfo, bill) => {
   const data = doc.output();
 
   fs.writeFileSync(
-    `${getOutputDir(createdAt)}/${getBillFilename(customer, bill, createdAt)}`,
+    `${getOutputDir(createdAt)}/${getBillFilename(customer, bill, createdAt)}.pdf`,
     data,
     'binary',
   );
@@ -148,4 +146,4 @@ const printBill = (ocInfo, bill) => {
   return bill.code;
 };
 
-module.exports = { printBill };
+module.exports = { getOutputDir, printBill };
