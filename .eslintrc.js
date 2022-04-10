@@ -11,5 +11,7 @@ module.exports = {
     ecmaVersion: 'latest',
   },
   rules: {
+    'new-cap': ['off', 'never'],
+    'implicit-arrow-linebreak': ['off', 'never'],
   },
 };

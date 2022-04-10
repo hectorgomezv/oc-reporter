@@ -20,6 +20,8 @@
   "dependencies": {
     "axios": "^0.26.1",
     "dotenv": "^16.0.0",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.23",
     "pino": "^7.10.0"
   },
   "devDependencies": {
