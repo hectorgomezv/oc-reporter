@@ -3,9 +3,8 @@ const pdfPrinter = require('../../infrastructure/pdf/bill-pdf-printer');
 
 const report = async () => {
   const { ocInfo, bills } = await billRepository.findUnreportedBills();
-  pdfPrinter.printBill();
 
-  return bills;
+  return bills.map((bill) => pdfPrinter.printBill(ocInfo, bill));
 };
 
 const markAsReported = (bills) => {

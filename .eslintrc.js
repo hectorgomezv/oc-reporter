@@ -12,5 +12,6 @@ module.exports = {
   },
   rules: {
     'new-cap': ['off', 'never'],
+    'implicit-arrow-linebreak': ['off', 'never'],
   },
 };
