@@ -4,7 +4,7 @@ const mailService = require('@sendgrid/mail');
 
 const {
   EMAIL_FROM_ADDRESS,
-  EMAIL_TO_ADDRESS,
+  EMAIL_TO_ADDRESSES,
   SENDGRID_API_KEY,
   SENDGRID_TEMPLATE_ID,
 } = process.env;
@@ -12,7 +12,7 @@ const {
 mailService.setApiKey(SENDGRID_API_KEY);
 
 const sendMail = (attachmentPath) => mailService.send({
-  to: EMAIL_TO_ADDRESS,
+  to: EMAIL_TO_ADDRESSES.split(','),
   from: EMAIL_FROM_ADDRESS,
   templateId: SENDGRID_TEMPLATE_ID,
   attachments: [
