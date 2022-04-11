@@ -6,4 +6,6 @@ const findUnreportedBills = async () => {
   return { ocInfo, bills };
 };
 
-module.exports = { findUnreportedBills };
+const markAsReported = (billCodes) => billClient.markAsReported(billCodes);
+
+module.exports = { findUnreportedBills, markAsReported };
