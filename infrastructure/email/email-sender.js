@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const mailService = require('@sendgrid/mail');
 
 const {
@@ -7,21 +9,18 @@ const {
 
 mailService.setApiKey(SENDGRID_API_KEY);
 
-const sendMail = (attachment) => mailService.send({
-  to: 'to@gmail.com',
-  from: 'from@gmail.com',
+const sendMail = (attachmentPath) => mailService.send({
+  to: 'dusseldorfvampire@gmail.com',
+  from: 'hector.gomez.varela@gmail.com',
   templateId: SENDGRID_TEMPLATE_ID,
-  // subject: 'Sending with Twilio SendGrid is Fun',
-  // text: 'and easy to do anywhere, even with Node.js',
-  // html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-  // attachments: [
-  //   {
-  //     content: attachment.toString('base64'),
-  //     filename: 'attachment.pdf',
-  //     type: 'application/pdf',
-  //     disposition: 'attachment',
-  //   },
-  // ],
+  attachments: [
+    {
+      content: fs.readFileSync(attachmentPath, { encoding: 'base64' }),
+      filename: path.basename(attachmentPath),
+      type: 'application/zip',
+      disposition: 'attachment',
+    },
+  ],
 });
 
 module.exports = { sendMail };
