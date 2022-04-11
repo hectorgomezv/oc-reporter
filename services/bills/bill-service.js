@@ -2,7 +2,7 @@ const path = require('path');
 const pdfPrinter = require('../pdf/bill-pdf-printer');
 const billRepository = require('../../domain/bills/bill-repository');
 const dateFormatter = require('../../domain/dates/date-formatter');
-const fileArchiver = require('../../infrastructure/filesystem/file-archiver');
+const { fileArchiver } = require('../../infrastructure');
 
 const report = async () => {
   const { ocInfo, bills } = await billRepository.findUnreportedBills();
