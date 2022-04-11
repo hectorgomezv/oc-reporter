@@ -6,7 +6,7 @@ const { logger } = require('../../infrastructure');
  */
 const report = async () => {
   const unreportedData = await billService.report();
-  logger.info(`Reporting ${unreportedData.length} items`);
+  logger.info(`${unreportedData.length} items reported.`);
 };
 
 module.exports = { report };
