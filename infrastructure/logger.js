@@ -1,5 +1,7 @@
 const pino = require('pino');
 
+const { LOG_DESTINATION } = process.env;
+
 module.exports = {
-  logger: pino(pino.destination('./out.log')),
+  logger: pino(pino.destination(LOG_DESTINATION)),
 };
